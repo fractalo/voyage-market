@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import voyage.market.domain.Item;
 import voyage.market.dto.ItemDto;
 import voyage.market.dto.ItemUpdateRequest;
+import voyage.market.exception.NotFoundException;
 import voyage.market.repository.ItemRepository;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class ItemService {
     @Transactional
     public ItemDto updateItem(Long itemId, ItemUpdateRequest request) {
         Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이템입니다."));
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 게시글입니다."));
 
         item.update(request.username(), request.title(), request.content(), request.price());
 
