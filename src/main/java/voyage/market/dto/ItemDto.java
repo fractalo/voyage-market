@@ -1,5 +1,6 @@
 package voyage.market.dto;
 
+import jakarta.validation.constraints.PositiveOrZero;
 import voyage.market.domain.Item;
 
 public record ItemDto(
@@ -7,7 +8,7 @@ public record ItemDto(
         String username,
         String title,
         String content,
-        Integer price
+        @PositiveOrZero Integer price
 ) {
     public ItemDto(Item item) {
         this(

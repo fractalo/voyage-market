@@ -1,6 +1,8 @@
 package voyage.market.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import voyage.market.dto.ItemDto;
 import voyage.market.dto.ItemUpdateRequest;
@@ -15,7 +17,7 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ItemDto addItem(@RequestBody ItemUpdateRequest request) {
+    public ItemDto addItem(@Validated @RequestBody ItemUpdateRequest request) {
         return itemService.addItem(request);
     }
 
@@ -25,7 +27,8 @@ public class ItemController {
     }
 
     @PutMapping("/{itemId}")
-    public ItemDto updateItem(@PathVariable Long itemId, @RequestBody ItemUpdateRequest request) {
+    public ItemDto updateItem(@PathVariable Long itemId,
+                              @Validated @RequestBody ItemUpdateRequest request) {
         return itemService.updateItem(itemId, request);
     }
 
