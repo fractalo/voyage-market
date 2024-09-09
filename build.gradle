@@ -38,3 +38,28 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+def dockerhubUsername = System.getenv("DOCKERHUB_USERNAME") ?: ""
+def dockerhubPassword = System.getenv("DOCKERHUB_PASSWORD") ?: ""
+def targetImageName = System.getenv("IMAGE_NAME") ?: ""
+
+jib {
+	from {
+		image = "eclipse-temurin:17-jre"
+		auth {
+			username = dockerhubUsername
+			password = dockerhubPassword
+		}
+	}
+	to {
+		image = targetImageName
+		auth {
+			username = dockerhubUsername
+			password = dockerhubPassword
+		}
+	}
+	container {
+		jvmFlags = ["-Dspring.profiles.active=prod"]
+		creationTime = "USE_CURRENT_TIMESTAMP"
+	}
+}
