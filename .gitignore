@@ -39,3 +39,4 @@ out/
 ### Application Properties ###
 **/application.properties
 **/application.yml
+**/application-*.yml
