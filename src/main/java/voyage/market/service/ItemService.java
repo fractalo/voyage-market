@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import voyage.market.domain.Item;
 import voyage.market.dto.ItemDto;
+import voyage.market.dto.ItemSummaryDto;
 import voyage.market.dto.ItemUpdateRequest;
 import voyage.market.exception.NotFoundException;
 import voyage.market.repository.ItemRepository;
@@ -24,11 +25,17 @@ public class ItemService {
         return new ItemDto(item);
     }
 
-    public List<ItemDto> getAllItems() {
+    public List<ItemSummaryDto> getItemList() {
         List<Item> items = itemRepository.findAll();
         return items.stream()
-                .map(ItemDto::new)
+                .map(ItemSummaryDto::new)
                 .toList();
+    }
+
+    public ItemDto findItem(Long itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 게시글입니다."));
+        return new ItemDto(item);
     }
 
     @Transactional

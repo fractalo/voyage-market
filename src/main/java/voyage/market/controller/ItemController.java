@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import voyage.market.dto.ItemDto;
+import voyage.market.dto.ItemSummaryDto;
 import voyage.market.dto.ItemUpdateRequest;
 import voyage.market.service.ItemService;
 
@@ -21,8 +22,13 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllItems() {
-        return itemService.getAllItems();
+    public List<ItemSummaryDto> getItemList() {
+        return itemService.getItemList();
+    }
+
+    @GetMapping("/{itemId}")
+    public ItemDto getItem(@PathVariable Long itemId) {
+        return itemService.findItem(itemId);
     }
 
     @PutMapping("/{itemId}")
